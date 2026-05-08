@@ -5,7 +5,9 @@ REM Read version from version.txt
 for /f "delims=" %%a in (data\version.txt) do set version=%%a
 
 REM Check if Ahk2Exe exists
-if exist "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe" (
+if exist "D:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe" (
+    set AHK2EXE="D:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe"
+) else if exist "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe" (
     set AHK2EXE="C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe"
 ) else if exist "C:\Program Files (x86)\AutoHotkey\Compiler\Ahk2Exe.exe" (
     set AHK2EXE="C:\Program Files (x86)\AutoHotkey\Compiler\Ahk2Exe.exe"
@@ -15,12 +17,23 @@ if exist "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe" (
 )
 
 REM Find AutoHotkey binary
-if exist "C:\Program Files\AutoHotkey\ahk_h v2.1-alpha.7\AutoHotkey64.exe" (
+set AHKBIN=
+if exist "D:\Program Files\AutoHotkey\AutoHotkey64.exe" (
+    set AHKBIN="D:\Program Files\AutoHotkey\AutoHotkey64.exe"
+) else if exist "D:\Program Files\AutoHotkey\ahk_h v2.1-alpha.7\AutoHotkey64.exe" (
+    set AHKBIN="D:\Program Files\AutoHotkey\ahk_h v2.1-alpha.7\AutoHotkey64.exe"
+) else if exist "C:\Program Files\AutoHotkey\AutoHotkey64.exe" (
+    set AHKBIN="C:\Program Files\AutoHotkey\AutoHotkey64.exe"
+) else if exist "C:\Program Files\AutoHotkey\ahk_h v2.1-alpha.7\AutoHotkey64.exe" (
     set AHKBIN="C:\Program Files\AutoHotkey\ahk_h v2.1-alpha.7\AutoHotkey64.exe"
 ) else (
-    REM Try to find any AutoHotkey64.exe
+    REM Try to find any AutoHotkey64.exe under D:\Program Files\AutoHotkey
+    for /r "D:\Program Files\AutoHotkey" %%i in (AutoHotkey64.exe) do (
+        if not defined AHKBIN if exist "%%i" set AHKBIN="%%i"
+    )
+    REM Try to find any AutoHotkey64.exe under C:\Program Files\AutoHotkey
     for /r "C:\Program Files\AutoHotkey" %%i in (AutoHotkey64.exe) do (
-        if exist "%%i" set AHKBIN="%%i"
+        if not defined AHKBIN if exist "%%i" set AHKBIN="%%i"
     )
     if not defined AHKBIN (
         echo AutoHotkey64.exe not found. Please install AutoHotkey v2.
@@ -51,7 +64,12 @@ if exist "release\%version%\window-summoner.exe" (
 )
 
 REM Optional: compress to zip using Bandizip if available
-if exist "C:\Program Files\Bandizip\Bandizip.exe" (
+if exist "D:\Program Files\Bandizip\Bandizip.exe" (
+    "D:\Program Files\Bandizip\Bandizip.exe" c -y -r "release\%version%.zip" "release\%version%"
+    if exist "release\%version%.zip" (
+        echo Zip created: release\%version%.zip
+    )
+) else if exist "C:\Program Files\Bandizip\Bandizip.exe" (
     "C:\Program Files\Bandizip\Bandizip.exe" c -y -r "release\%version%.zip" "release\%version%"
     if exist "release\%version%.zip" (
         echo Zip created: release\%version%.zip
