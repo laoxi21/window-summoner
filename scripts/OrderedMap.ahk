@@ -14,14 +14,13 @@
 
 class OrderedMap extends Map {
   __New(args*) {
-    this.Keys(getOrderedKeys(args*))
+    this._keys := getOrderedKeys(args*)
     return super.__New(args*)
   }
   Keys(newValue := unset) {
-    static keys := []
     if IsSet(newValue) {
-      keys := newValue
+      this._keys := newValue
     }
-    return keys
+    return this._keys
   }
 }

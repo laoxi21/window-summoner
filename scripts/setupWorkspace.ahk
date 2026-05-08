@@ -16,7 +16,7 @@ setupWorkspace(workspaceConfig) {
     _setupWorkspace(suffix, workspaceConfig)
   }
   _setupWorkspace(suffix, workspaceConfig) {
-    switchShortcut := joinStrs(workspaceConfig["mod"]) . suffix
+    switchShortcut := JoinStrs(workspaceConfig["mod"]) . suffix
     workspaces.Set(suffix, { list: [], active: false })
     MyHotkey(switchShortcut, (key) {
       _switchToWorkspace(suffix, workspaceConfig["fullRestore"])

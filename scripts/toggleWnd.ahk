@@ -138,16 +138,16 @@ toggleWnd(id, entry := unset) {
         if (config["misc"]["transitionAnim"]) {
           CallAsync(WinMinimize, id)
           Sleep(150)
-        } else
+        } else {
           Send("!{Esc}")
+        }
       }
-      ; CallAsync(WinHide, id)
       WinHide(id)
       if (clearActivatedWnd)
         activatedWnd := false
+      addHiddenSubmenu(id)
+      addWndHandler(id)
     }
-    addHiddenSubmenu(id)
-    addWndHandler(id)
   }
   _show(id) {
     try {

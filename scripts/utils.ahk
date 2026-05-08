@@ -33,7 +33,7 @@ RegExMatchAll(str, regex, isGroup := true) {
 
 
 HasVal(array, val) {
-  return array.IndexOf(val) ? 1 : 0
+  return array.IndexOf(val) != 0
 }
 
 DeleteVal(array, val) {

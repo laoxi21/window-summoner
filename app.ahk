@@ -95,6 +95,7 @@ class Configurator {
 
     this.tab.UseTab(0)
     BS_FLAT := 0x8000
+    ; 按钮放在 tab 外层，这样切换 tab 时不会被遮挡
     btn := this.gui.AddButton(S({ x: this.guiWidth - 60.5, y: "s-3", }), "应用配置")
     btn.OnEvent(
       "Click", (gui, info) {
@@ -143,7 +144,7 @@ class Configurator {
     this.gui.MenuBar.Add("关于", aboutMenu)
   }
   _dynamicTab() {
-    this.tab.UseTab(2)
+    this.tab.UseTab(0)
     this.gui.AddText("section x+10 y+10 w0 h0", "")
     dynamicConfig := this.config["dynamic"]
     this._addComponent(this.COMPONENT_CLASS.CHECKBOX, '启用绑定', dynamicConfig, "enable", "section xs ys")
@@ -174,7 +175,7 @@ class Configurator {
       , , "r6.3 y+10")
   }
   _workspaceTab() {
-    this.tab.UseTab(3)
+    this.tab.UseTab(1)
     this.gui.AddText("section x+10 y+10 w0 h0", "")
     workspaceConfig := this.config["workspace"]
     this._addComponent(this.COMPONENT_CLASS.CHECKBOX, '启用工作区', workspaceConfig, "enable", "section xs ys")
@@ -198,7 +199,7 @@ class Configurator {
       , , "r8.2 y+15")
   }
   _shortcutTab() {
-    this.tab.UseTab(1)
+    this.tab.UseTab(2)
     this.gui.AddText("section x+10 y+10 w0 h0", "")
     shortcutConfig := this.config["shortcuts"]
     c1 := 10
@@ -478,7 +479,7 @@ class Configurator {
     }
   }
   _miscTab() {
-    this.tab.UseTab(4)
+    this.tab.UseTab(3)
     this.gui.AddText("section x+10 y+10 w0 h0", "")
     miscConfig := this.config["misc"]
     this.gui.AddText("section xs ys c676767", "通用")
